@@ -12,8 +12,7 @@ func TestTree_Iterator(t *testing.T) {
 	tree.Insert("8", 8)
 	tree.Insert("3", 3)
 
-	it := tree.Iterator()
-	for node := range it{
+	for node := range tree.Iterator(){
 		t.Log(node.key, ":", node.value)
 	}
 }
