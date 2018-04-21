@@ -5,7 +5,7 @@ import (
 )
 
 func TestNode_Insert(t *testing.T) {
-	tree := &Node{key: "5", value: "5"}
+	tree := &Node{Key: "5", Value: "5"}
 
 	tree.Insert("2", "2")
 	tree.Insert("1", "1")
@@ -21,7 +21,7 @@ func TestNode_Insert(t *testing.T) {
 }
 
 func TestNode_Find(t *testing.T) {
-	tree := &Node{key: "5", value: "5"}
+	tree := &Node{Key: "5", Value: "5"}
 
 	tree.Insert("2", "2")
 	tree.Insert("1", "1")
@@ -58,7 +58,7 @@ func TestNode_Find(t *testing.T) {
 }
 
 func TestNode_Delete(t *testing.T) {
-	tree := &Node{key: "5", value: "5"}
+	tree := &Node{Key: "5", Value: "5"}
 
 	tree.Insert("2", "2")
 	tree.Insert("1", "1")
@@ -125,7 +125,7 @@ func TestNode_Delete(t *testing.T) {
 }
 
 func TestNode_InOrder(t *testing.T) {
-	tree := &Node{key: "5", value: "5"}
+	tree := &Node{Key: "5", Value: "5"}
 
 	tree.Insert("2", "2")
 	tree.Insert("1", "1")
