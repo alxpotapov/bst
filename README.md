@@ -29,7 +29,13 @@ tree.Delete(key)
 ```
 ## Using channel iterator for walking tree (in-order way)
 ```
-for node := range tree.Iterator(){
+for node := range tree.ChannelIterator(){
   fmt.Printf("%s:%v\n", node.key, node.value)
+}
+```
+## Using stateful iterator for walking tree (in-order way)
+```
+for it := tree.StatefulIterator(); it.Next(); {
+  fmt.Printf("%s:%v\n", it.Node().Key, it.Node().Value)
 }
 ```
