@@ -5,7 +5,7 @@
  * delete by key
 ## Create tree and insert nodes
 ```
-tree := &Node{key: "5", value: 5}
+tree := &Tree{}
 
 tree.Insert("2", 2)
 tree.Insert("1", 1)
@@ -29,15 +29,6 @@ tree = tree.Delete(key)
 ```
 ## Using channel iterator for walking tree (in-order way)
 ```
-tree := &Tree{}
-
-tree.Insert("2", 2)
-tree.Insert("1", 1)
-tree.Insert("7", 7)
-tree.Insert("6", 6)
-tree.Insert("8", 8)
-tree.Insert("3", 3)
-
 for node := range tree.Iterator(){
   fmt.Printf("%s:%v\n", node.key, node.value)
 }
