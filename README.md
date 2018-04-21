@@ -39,6 +39,6 @@ tree.Insert("8", 8)
 tree.Insert("3", 3)
 
 for node := range tree.Iterator(){
-		fmt.Printf("%s:%v\n", node.key, node.value)
+  fmt.Printf("%s:%v\n", node.key, node.value)
 }
 ```
