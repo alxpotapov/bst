@@ -25,7 +25,7 @@ if value, ok :=tree.Find(key); ok {
 ## Delete value by key
 ```
 key := "5"
-tree = tree.Delete(key)
+tree.Delete(key)
 ```
 ## Using channel iterator for walking tree (in-order way)
 ```
