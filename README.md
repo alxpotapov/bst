@@ -35,6 +35,7 @@ tree.Delete(key)
  * Callback iterator
  * Stateful iterator
  * Channel iterator
+
 ##Iterating via callback
 ```
 tree.ForEach(func(node *Node){
