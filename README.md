@@ -3,6 +3,10 @@
  * insert key and its value
  * find by key
  * delete by key
+## Usage
+```
+go get github.com/alxpotapov/bst
+```
 ## Create tree and insert nodes
 ```
 tree := &Tree{}
