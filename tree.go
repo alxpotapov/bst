@@ -30,15 +30,30 @@ func (t *Tree) Delete(key string) {
 	t.root = t.root.Delete(key)
 }
 
-// inOrder - in-order way walking in tree and send node to chan
-func (t *Tree) inOrder(node *Node, it chan<- *Node) {
+
+// ForEach ...
+func (t *Tree) ForEach(callback Callback) {
+	if t.root == nil {
+		return
+	}
+	t.forEach(t.root, callback)
+}
+
+
+func (t *Tree) forEach(node *Node, callback Callback) {
 	if node.left != nil {
-		t.inOrder(node.left, it)
+		t.forEach(node.left, callback)
 	}
-	it <- node
+	callback(node)
 	if node.right != nil {
-		t.inOrder(node.right, it)
+		t.forEach(node.right, callback)
 	}
+}
+
+
+// StatefulIterator ...
+func (t *Tree) StatefulIterator() *StatefulIterator {
+	return NewStatefulIterator(t)
 }
 
 // ChannelIterator ...
@@ -50,10 +65,21 @@ func (t *Tree) ChannelIterator() <-chan *Node {
 	}()
 	return it
 }
-
-func (t *Tree) StatefulIterator() *StatefulIterator {
-	return NewStatefulIterator(t)
+// inOrder - in-order way walking in tree and send node to chan
+func (t *Tree) inOrder(node *Node, it chan<- *Node) {
+	if node.left != nil {
+		t.inOrder(node.left, it)
+	}
+	it <- node
+	if node.right != nil {
+		t.inOrder(node.right, it)
+	}
 }
+
+
+type Callback func(node *Node)
+
+
 
 // StatefulIterator hold the iteration state in the iterator struct itself
 type StatefulIterator struct {

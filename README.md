@@ -1,12 +1,12 @@
 # BST
- A simple implementation of basic binary search methods:
- * insert key and its value
- * find by key
- * delete by key
 ## Usage
 ```
 go get github.com/alxpotapov/bst
 ```
+## A simple implementation of basic binary search methods:
+ * insert key and its value
+ * find by key
+ * delete by key
 ## Create tree and insert nodes
 ```
 tree := &Tree{}
@@ -31,15 +31,25 @@ if value, ok :=tree.Find(key); ok {
 key := "5"
 tree.Delete(key)
 ```
-## Using channel iterator for walking tree (in-order way)
+## 3 iteration patterns in BST:
+ * Callback iterator
+ * Stateful iterator
+ * Channel iterator
+##Iterating via callback
 ```
-for node := range tree.ChannelIterator(){
+tree.ForEach(func(node *Node){
   fmt.Printf("%s:%v\n", node.key, node.value)
-}
+})
 ```
-## Using stateful iterator for walking tree (in-order way)
+## Iterating with Next()
 ```
 for it := tree.StatefulIterator(); it.Next(); {
   fmt.Printf("%s:%v\n", it.Node().Key, it.Node().Value)
+}
+```
+## Iterating with a channel
+```
+for node := range tree.ChannelIterator(){
+  fmt.Printf("%s:%v\n", node.key, node.value)
 }
 ```
