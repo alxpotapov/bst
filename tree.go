@@ -103,10 +103,7 @@ func (s *StatefulIterator) push(node *Node) {
 // Next advances iterator to next value. It returns false to indicate end of iteration
 func (s *StatefulIterator) Next() bool {
 	s.current++
-	if len(s.nodes) > s.current {
-		return true
-	}
-	return false
+	return len(s.nodes) > s.current
 }
 
 // Node to get the current pointer of node of the iterator
