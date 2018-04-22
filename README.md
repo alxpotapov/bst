@@ -35,8 +35,7 @@ tree.Delete(key)
  * Callback iterator
  * Stateful iterator
  * Channel iterator
-
-##Iterating via callback
+## Iterating via callback
 ```
 tree.ForEach(func(node *Node){
   fmt.Printf("%s:%v\n", node.key, node.value)
