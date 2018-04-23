@@ -5,6 +5,8 @@ import (
 	"strings"
 	"fmt"
 )
+// Callback ...
+type Callback func(node *Node)
 
 // Node contains the key as string, value as interface{} and 2 pointers to his children
 type Node struct {
@@ -83,9 +85,10 @@ func (n *Node) Delete(key string) *Node {
 		// two children
 		//find minimum value on the right side
 		node := n.right.minimum()
-		// change data between nodes
+		// and set data to current node
 		n.Key = node.Key
 		n.Value = node.Value
+		// delete node on the right side
 		n.right = n.right.Delete(node.Key)
 	}
 	return n
@@ -98,17 +101,18 @@ func (n *Node) minimum() *Node {
 	return n
 }
 
-func (n *Node) inOrder() string {
+
+func (n *Node) String() string {
 	if n == nil {
 		return "()"
 	}
 	s := ""
 	if n.left != nil {
-		s += n.left.inOrder() + " "
+		s += n.left.String() + " "
 	}
 	s += fmt.Sprintf("%s:%v", n.Key, n.Value)
 	if n.right != nil {
-		s += " " + n.right.inOrder()
+		s += " " + n.right.String()
 	}
 	return "(" + s + ")"
 }

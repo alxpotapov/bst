@@ -15,8 +15,8 @@ func TestNode_Insert(t *testing.T) {
 	tree.Insert("3", "3")
 	tree.Insert("3", "33")
 
-	if tree.inOrder() != "(((1:1) 2:2 (3:33)) 5:5 ((6:6) 7:7 (8:8)))" {
-		t.Error("expected (((1:1) 2:2 (3:33)) 5:5 ((6:6) 7:7 (8:8))), got ", tree.inOrder())
+	if tree.String() != "(((1:1) 2:2 (3:33)) 5:5 ((6:6) 7:7 (8:8)))" {
+		t.Error("expected (((1:1) 2:2 (3:33)) 5:5 ((6:6) 7:7 (8:8))), got ", tree.String())
 	}
 }
 
@@ -69,58 +69,58 @@ func TestNode_Delete(t *testing.T) {
 
 	key := "2"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "(((1:1) 3:3) 5:5 ((6:6) 7:7 (8:8)))" {
+	if tree.String() != "(((1:1) 3:3) 5:5 ((6:6) 7:7 (8:8)))" {
 		t.Error("delete ", key)
-		t.Error("expected (((1:1) 3:3) 5:5 ((6:6) 7:7 (8:8))), got ", tree.inOrder())
+		t.Error("expected (((1:1) 3:3) 5:5 ((6:6) 7:7 (8:8))), got ", tree.String())
 	}
 
 	key = "5"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "(((1:1) 3:3) 6:6 (7:7 (8:8)))" {
+	if tree.String() != "(((1:1) 3:3) 6:6 (7:7 (8:8)))" {
 		t.Error("delete ", key)
-		t.Error("expected (((1:1) 3:3) 6:6 (7:7 (8:8))), got ", tree.inOrder())
+		t.Error("expected (((1:1) 3:3) 6:6 (7:7 (8:8))), got ", tree.String())
 	}
 
 	key = "7"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "(((1:1) 3:3) 6:6 (8:8))" {
+	if tree.String() != "(((1:1) 3:3) 6:6 (8:8))" {
 		t.Error("delete ", key)
-		t.Error("expected (((1:1) 3:3) 6:6 (8:8)), got ", tree.inOrder())
+		t.Error("expected (((1:1) 3:3) 6:6 (8:8)), got ", tree.String())
 	}
 
 	key = "10"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "(((1:1) 3:3) 6:6 (8:8))" {
+	if tree.String() != "(((1:1) 3:3) 6:6 (8:8))" {
 		t.Error("delete ", key)
-		t.Error("expected (((1:1) 3:3) 6:6 (8:8)), got ", tree.inOrder())
+		t.Error("expected (((1:1) 3:3) 6:6 (8:8)), got ", tree.String())
 	}
 
 	key = "3"
 	tree.Delete(key)
-	if tree.inOrder() != "((1:1) 6:6 (8:8))" {
+	if tree.String() != "((1:1) 6:6 (8:8))" {
 		t.Error("delete ", key)
-		t.Error("expected ((1:1) 6:6 (8:8)), got ", tree.inOrder())
+		t.Error("expected ((1:1) 6:6 (8:8)), got ", tree.String())
 	}
 
 	key = "1"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "(6:6 (8:8))" {
+	if tree.String() != "(6:6 (8:8))" {
 		t.Error("delete ", key)
-		t.Error("expected (6:6 (8:8)), got ", tree.inOrder())
+		t.Error("expected (6:6 (8:8)), got ", tree.String())
 	}
 
 	key = "8"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "(6:6)" {
+	if tree.String() != "(6:6)" {
 		t.Error("delete ", key)
-		t.Error("expected (6:6), got ", tree.inOrder())
+		t.Error("expected (6:6), got ", tree.String())
 	}
 
 	key = "6"
 	tree = tree.Delete(key)
-	if tree.inOrder() != "()" {
+	if tree.String() != "()" {
 		t.Error("delete ", key)
-		t.Error("expected (), got ", tree.inOrder())
+		t.Error("expected (), got ", tree.String())
 	}
 }
 
@@ -139,8 +139,8 @@ func TestNode_InOrder(t *testing.T) {
 	tree = tree.Delete("7")
 	tree = tree.Delete("8")
 
-	if tree.inOrder() != "(((1:1) 3:3) 6:6)" {
-		t.Error("expected (((1:1) 3:3) 6:6), got ", tree.inOrder())
+	if tree.String() != "(((1:1) 3:3) 6:6)" {
+		t.Error("expected (((1:1) 3:3) 6:6), got ", tree.String())
 	}
 }
 

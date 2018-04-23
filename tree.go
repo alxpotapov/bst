@@ -5,8 +5,6 @@ type Tree struct {
 	root *Node
 }
 
-// Callback - for callback iterator
-type Callback func(node *Node)
 
 // StatefulIterator hold the iteration state in the iterator struct itself
 type StatefulIterator struct {
@@ -72,7 +70,7 @@ func (t *Tree) ChannelIterator() <-chan *Node {
 	return it
 }
 
-// inOrder - in-order way walking in tree and send node to chan
+// String - in-order way walking in tree and send node to chan
 func (t *Tree) inOrder(node *Node, it chan<- *Node) {
 	if node.left != nil {
 		t.inOrder(node.left, it)
