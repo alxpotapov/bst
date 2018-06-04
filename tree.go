@@ -1,110 +1,44 @@
 package bst
 
-// Tree - a binary search tree
+// Tree ...
 type Tree struct {
-	root *Node
+	root     *node    // Корневой узел
+	comparer Comparer // Функция сравнения 2-х ключей
 }
 
-
-// StatefulIterator hold the iteration state in the iterator struct itself
-type StatefulIterator struct {
-	current int
-	nodes   []*Node
-}
-
-// Insert node
-func (t *Tree) Insert(key string, value interface{}) {
-	if t.root == nil {
-		t.root = &Node{Key: key, Value: value}
-		return
-	}
-	t.root.Insert(key, value)
-}
-
-// Find node
-func (t *Tree) Find(key string) (interface{}, bool) {
-	if t.root == nil {
-		return nil, false
-	}
-	return t.root.Find(key)
-}
-
-// Delete node
-func (t *Tree) Delete(key string) {
-	if t.root == nil {
-		return
-	}
-	t.root = t.root.Delete(key)
-}
-
-// ForEach ...
-func (t *Tree) ForEach(callback Callback) {
-	if t.root == nil {
-		return
-	}
-	t.forEach(t.root, callback)
-}
-
-func (t *Tree) forEach(node *Node, callback Callback) {
-	if node.left != nil {
-		t.forEach(node.left, callback)
-	}
-	callback(node)
-	if node.right != nil {
-		t.forEach(node.right, callback)
+// NewTree - создает новое дерево. Аргумент - фнкция сравнения двух ключей
+func NewTree(comparer Comparer) *Tree {
+	return &Tree{
+		comparer: comparer,
 	}
 }
 
-// StatefulIterator ...
-func (t *Tree) StatefulIterator() *StatefulIterator {
-	return NewStatefulIterator(t)
+// Insert ...
+func (t *Tree) Insert(key, value interface{}) {
+	t.root = t.root.insert(key, value, t.comparer)
 }
 
-// ChannelIterator ...
-func (t *Tree) ChannelIterator() <-chan *Node {
-	it := make(chan *Node)
-	go func() {
-		defer close(it)
-		t.inOrder(t.root, it)
-	}()
-	return it
+// Find ...
+func (t *Tree) Find(key interface{}) (interface{}, bool) {
+	return t.root.find(key, t.comparer)
 }
 
-// String - in-order way walking in tree and send node to chan
-func (t *Tree) inOrder(node *Node, it chan<- *Node) {
-	if node.left != nil {
-		t.inOrder(node.left, it)
-	}
-	it <- node
-	if node.right != nil {
-		t.inOrder(node.right, it)
-	}
+// Delete ...
+func (t *Tree) Delete(key interface{}) {
+	t.root = t.root.delete(key, t.comparer)
 }
 
-// NewStatefulIterator ...
-func NewStatefulIterator(tree *Tree) *StatefulIterator {
-	it := &StatefulIterator{current: -1, nodes: make([]*Node, 0, 16)}
-	it.push(tree.root)
-	return it
+// Clear ...
+func (t *Tree) Clear() {
+	t.root = nil
 }
 
-func (s *StatefulIterator) push(node *Node) {
-	if node.left != nil {
-		s.push(node.left)
-	}
-	s.nodes = append(s.nodes, node)
-	if node.right != nil {
-		s.push(node.right)
-	}
+// Empty ...
+func (t *Tree) Empty() bool {
+	return t.root == nil
 }
 
-// Next advances iterator to next value. It returns false to indicate end of iteration
-func (s *StatefulIterator) Next() bool {
-	s.current++
-	return len(s.nodes) > s.current
-}
-
-// Node to get the current pointer of node of the iterator
-func (s *StatefulIterator) Node() *Node {
-	return s.nodes[s.current]
+// String ...
+func (t *Tree) String() string {
+	return t.root.String()
 }

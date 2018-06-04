@@ -7,49 +7,36 @@ go get github.com/alxpotapov/bst
  * insert key and its value
  * find by key
  * delete by key
-### Create tree and insert nodes
+### Create tree
 ```
-tree := &Tree{}
+tree := NewTree(func(f, s interface{}) Comparison {
+		intF, _ := f.(string)
+		intS, _ := s.(string)
+		switch {
+		case intF < intS:
+			return IsLesser
+		case intF > intS:
+			return IsGreater
+		}
+		return AreEqual
+	})
 
-tree.Insert("2", 2)
-tree.Insert("1", 1)
-tree.Insert("7", 7)
-tree.Insert("6", 6)
-tree.Insert("8", 8)
-tree.Insert("3", 3)
-tree.Insert("3", 33)
+```
+### Insert nodes
+```
+	tree.Insert("A", "AA")
+	tree.Insert("L", "LL")
+	tree.Insert("G", "GG")
+	fmt.Println(tree)
 ```
 ### Find value by key
 ```
-key := "5"
-if value, ok :=tree.Find(key); ok {
-  fmt.Printf("%s:%v\n", key, value)
+if value, found := tree.Find("L"); found {
+	// ...
 }
 ```
 ### Delete value by key
 ```
-key := "5"
-tree.Delete(key)
-```
-## 3 iteration patterns in BST:
- * Callback iterator
- * Stateful iterator
- * Channel iterator
-### Iterating via callback
-```
-tree.ForEach(func(node *Node){
-  fmt.Printf("%s:%v\n", node.key, node.value)
-})
-```
-### Iterating with Next()
-```
-for it := tree.StatefulIterator(); it.Next(); {
-  fmt.Printf("%s:%v\n", it.Node().Key, it.Node().Value)
-}
-```
-### Iterating with a channel
-```
-for node := range tree.ChannelIterator(){
-  fmt.Printf("%s:%v\n", node.key, node.value)
-}
+tree.Delete("A")
+fmt.Println(tree)
 ```
