@@ -24,10 +24,10 @@ tree := NewTree(func(f, s interface{}) Comparison {
 ```
 ### Insert nodes
 ```
-	tree.Insert("A", "AA")
-	tree.Insert("L", "LL")
-	tree.Insert("G", "GG")
-	fmt.Println(tree)
+tree.Insert("A", "AA")
+tree.Insert("L", "LL")
+tree.Insert("G", "GG")
+fmt.Println(tree)
 ```
 ### Find value by key
 ```
