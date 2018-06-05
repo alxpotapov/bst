@@ -4,11 +4,6 @@ import (
 	"fmt"
 )
 
-const (
-	left  = 0
-	right = 1
-)
-
 type node struct {
 	key      interface{}
 	value    interface{}
@@ -24,7 +19,7 @@ func (n *node) insert(key, value interface{}, comparer Comparer) *node {
 	if n == nil {
 		return newNode(key, value)
 	}
-	var offset int
+	var offset offset
 	switch comparer(n.key, key) {
 	case IsGreater:
 		offset = left
@@ -44,7 +39,7 @@ func (n *node) find(key interface{}, comparer Comparer) (interface{}, bool) {
 	if n == nil {
 		return nil, false
 	}
-	var offset int
+	var offset offset
 	switch comparer(n.key, key) {
 	case IsGreater:
 		offset = left
@@ -61,7 +56,7 @@ func (n *node) delete(key interface{}, comparer Comparer) *node {
 	if n == nil {
 		return nil
 	}
-	var offset int
+	var offset offset
 	switch comparer(n.key, key) {
 	case IsGreater:
 		offset = left
@@ -72,6 +67,18 @@ func (n *node) delete(key interface{}, comparer Comparer) *node {
 	}
 	n.children[offset] = n.children[offset].delete(key, comparer)
 	return n
+}
+
+// String - вывод на экран
+func (n *node) String() string {
+	if n == nil {
+		return ""
+	}
+	s := ""
+	s += n.children[left].String()
+	s += fmt.Sprintf("%v", n.key)
+	s += n.children[right].String()
+	return "(" + s + ")"
 }
 
 func (n *node) splice(comparer Comparer) *node {
@@ -103,16 +110,4 @@ func (n *node) findMax() *node {
 		n.children[right] = n.children[right].findMax()
 	}
 	return n
-}
-
-// String - вывод на экран
-func (n *node) String() string {
-	if n == nil {
-		return ""
-	}
-	s := ""
-	s += n.children[left].String()
-	s += fmt.Sprintf("%v", n.key)
-	s += n.children[right].String()
-	return "(" + s + ")"
 }
